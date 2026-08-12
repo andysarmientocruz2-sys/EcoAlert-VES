@@ -10,10 +10,24 @@
     <title>EcoAlert VES</title>
     <meta name="description" content="Plataforma ciudadana de reportes ambientales para Villa El Salvador" />
     <meta name="theme-color" content="#0B0F14" />
-    <script type="module" crossorigin src="./assets/index-2GNFULls.js"></script>
+    <script type="module" crossorigin src="./assets/index-Bj9P-NXZ.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/react-vendor-COd4auuD.js">
+    <link rel="modulepreload" crossorigin href="./assets/framer-Cp_haBT0.js">
+    <link rel="modulepreload" crossorigin href="./assets/charts-BgimIHo0.js">
+    <link rel="modulepreload" crossorigin href="./assets/firebase-362sWc1R.js">
     <link rel="stylesheet" crossorigin href="./assets/index-kjL0WZDF.css">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="splash" style="position:fixed;inset:0;background:#0B0F14;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;font-family:Inter,system-ui,sans-serif;z-index:9999">
+        <div style="width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#4ADE80,#00D4FF);display:flex;align-items:center;justify-content:center;font-size:28px">🌿</div>
+        <div style="color:#4ADE80;font-weight:700;font-size:18px;letter-spacing:0.3px">EcoAlert VES</div>
+        <div style="color:#64748b;font-size:13px">Cargando plataforma ambiental...</div>
+        <div style="width:120px;height:3px;background:rgba(255,255,255,0.08);border-radius:99px;overflow:hidden">
+          <div style="width:40%;height:100%;background:linear-gradient(90deg,#4ADE80,#00D4FF);border-radius:99px;animation:splashLoad 1.1s ease-in-out infinite"></div>
+        </div>
+      </div>
+    </div>
+    <style>@keyframes splashLoad{0%{transform:translateX(-100%)}100%{transform:translateX(300%)}}</style>
   </body>
 </html>
