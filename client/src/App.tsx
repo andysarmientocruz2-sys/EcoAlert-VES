@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Route, Router, Switch, useHashLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Navigation from "./components/Navigation";
@@ -22,8 +22,9 @@ import MapPage from "./pages/MapPage";
 
 function Router() {
   return (
-    <Switch>
-      <Route path={"/"} component={Home} />
+    <Router hook={useHashLocation}>
+      <Switch>
+        <Route path={"/"} component={Home} />
       <Route path={"/login"} component={LoginPage} />
       <Route path={"/register"} component={RegisterPage} />
       <Route path={"/dashboard"} component={DashboardPage} />
@@ -39,7 +40,8 @@ function Router() {
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
-    </Switch>
+      </Switch>
+    </Router>
   );
 }
 
