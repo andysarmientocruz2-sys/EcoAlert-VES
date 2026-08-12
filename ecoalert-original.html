@@ -1,0 +1,1957 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoAlert VES - Despierta el planeta que vive en ti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #0B0F14;
+            --secondary-dark: #1a1f2e;
+            --accent-green: #4ADE80;
+            --accent-cyan: #00D4FF;
+            --accent-green-dark: #2d7d52;
+            --text-white: #ffffff;
+            --text-secondary: #b0b8c4;
+            --border-color: rgba(74, 222, 128, 0.2);
+            --border-color-cyan: rgba(0, 212, 255, 0.2);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-white);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animaciones globales */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px var(--accent-green), 0 0 20px var(--accent-green); }
+            50% { text-shadow: 0 0 20px var(--accent-green), 0 0 30px var(--accent-green); }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Elementos de fondo */
+        .background-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            animation: float 3s ease-in-out infinite;
+            opacity: 0.3;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(11, 15, 20, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1rem 0;
+            animation: slideInDown 0.6s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 15px var(--accent-green);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent-green);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-green);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-login, .btn-register {
+            padding: 0.6rem 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-login {
+            color: var(--accent-green);
+            background-color: transparent;
+            border-color: var(--border-color);
+        }
+
+        .btn-login:hover {
+            background-color: rgba(74, 222, 128, 0.1);
+            border-color: var(--accent-green);
+            box-shadow: 0 0 15px rgba(74, 222, 128, 0.3);
+        }
+
+        .btn-register {
+            background-color: var(--accent-green);
+            color: var(--primary-dark);
+            border-color: var(--accent-green);
+        }
+
+        .btn-register:hover {
+            box-shadow: 0 0 20px rgba(74, 222, 128, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem;
+            margin-top: 60px;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(74, 222, 128, 0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--accent-green);
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .hero-title .green {
+            color: var(--accent-green);
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .hero-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            padding: 0.85rem 2rem;
+            background-color: var(--accent-green);
+            color: var(--primary-dark);
+            border: none;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(74, 222, 128, 0.6);
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            padding: 0.85rem 2rem;
+            background-color: transparent;
+            color: var(--accent-cyan);
+            border: 1px solid var(--border-color-cyan);
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(0, 212, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .hero-info {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--accent-green);
+        }
+
+        .hero-mockup {
+            position: relative;
+            z-index: 2;
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        .phone-frame {
+            position: relative;
+            width: 320px;
+            height: 640px;
+            background: var(--secondary-dark);
+            border-radius: 40px;
+            padding: 12px;
+            border: 8px solid var(--primary-dark);
+            box-shadow: 0 20px 60px rgba(74, 222, 128, 0.2), inset 0 0 20px rgba(74, 222, 128, 0.05);
+        }
+
+        .phone-frame::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 25px;
+            background: var(--primary-dark);
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+            border-radius: 32px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            font-size: 0.7rem;
+        }
+
+        .screen-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .screen-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .screen-category {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .category-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--accent-green);
+        }
+
+        .screen-map {
+            flex: 1;
+            background: rgba(74, 222, 128, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-marker {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .map-marker.warning {
+            background: #FBBF24;
+        }
+
+        .map-marker.danger {
+            background: #EF4444;
+        }
+
+        .screen-button {
+            background: var(--accent-green);
+            color: var(--primary-dark);
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: auto;
+        }
+
+        /* About Section */
+        .about {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            text-align: center;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .about-text h3 {
+            font-size: 1.5rem;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .about-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            padding: 1rem;
+            background: rgba(74, 222, 128, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(74, 222, 128, 0.1);
+            border-color: var(--accent-green);
+            transform: translateX(10px);
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            color: var(--accent-green);
+            min-width: 30px;
+        }
+
+        .feature-text h4 {
+            color: var(--accent-green);
+            margin-bottom: 0.25rem;
+            font-size: 1rem;
+        }
+
+        .feature-text p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .about-image {
+            position: relative;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(26, 31, 46, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(74, 222, 128, 0.1) 0%, transparent 70%);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(74, 222, 128, 0.05);
+            border-color: var(--accent-green);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(74, 222, 128, 0.2);
+        }
+
+        .feature-card:hover::before {
+            top: -30%;
+            right: -30%;
+        }
+
+        .feature-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-green);
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-green);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Statistics Section */
+        .statistics {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(26, 31, 46, 0.7);
+            border: 1px solid var(--border-color-cyan);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .stat-card:hover {
+            background: rgba(0, 212, 255, 0.05);
+            border-color: var(--accent-cyan);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stat-change {
+            color: var(--accent-green);
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Map Section */
+        .map-section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .map-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: rgba(26, 31, 46, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .map-background {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            opacity: 0.3;
+            position: relative;
+            z-index: 1;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 50% 50%, rgba(74, 222, 128, 0.1) 0%, transparent 50%);
+            z-index: 2;
+        }
+
+        .map-legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(11, 15, 20, 0.9);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .color-green { background-color: #4ADE80; }
+        .color-yellow { background-color: #FBBF24; }
+        .color-orange { background-color: #F97316; }
+        .color-red { background-color: #EF4444; }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            height: 300px;
+            background: var(--secondary-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(74, 222, 128, 0.3);
+            border-color: var(--accent-green);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+            position: relative;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 15, 20, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-title {
+            color: var(--accent-green);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        /* Mission Section */
+        .mission {
+            padding: 6rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .mission-content {
+            background: rgba(26, 31, 46, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 3rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .mission-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-green);
+        }
+
+        .mission-text {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        .mission-highlight {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        /* IA Process Section */
+        .ia-process {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .process-timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            position: relative;
+        }
+
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            top: 100px;
+            left: 5%;
+            right: 5%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--accent-green) 50%, transparent 100%);
+            display: none;
+        }
+
+        @media (min-width: 1200px) {
+            .process-timeline::before {
+                display: block;
+            }
+        }
+
+        .process-step {
+            background: rgba(26, 31, 46, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .process-step:hover {
+            background: rgba(74, 222, 128, 0.05);
+            border-color: var(--accent-green);
+            transform: translateY(-10px);
+        }
+
+        .process-number {
+            width: 50px;
+            height: 50px;
+            background: var(--accent-green);
+            color: var(--primary-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin: 0 auto 1rem;
+        }
+
+        .process-arrow {
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-green);
+            font-size: 1.5rem;
+            opacity: 0.5;
+        }
+
+        .process-arrow:last-child {
+            display: none;
+        }
+
+        /* Support Section */
+        .support {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .support-card {
+            background: rgba(26, 31, 46, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .support-card:hover {
+            background: rgba(74, 222, 128, 0.05);
+            border-color: var(--accent-green);
+            transform: translateY(-10px);
+        }
+
+        .support-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-green);
+        }
+
+        .support-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--accent-green);
+        }
+
+        .support-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .support-link {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .support-link:hover {
+            color: var(--accent-green);
+            text-shadow: 0 0 10px var(--accent-green);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-content {
+            background: rgba(26, 31, 46, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 3rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .contact-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--accent-green);
+            margin-top: 0.25rem;
+        }
+
+        .contact-info h4 {
+            color: var(--accent-green);
+            margin-bottom: 0.25rem;
+            font-size: 1rem;
+        }
+
+        .contact-info p {
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .hours {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .hours h4 {
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+
+        .hours-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .hours-item {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-green);
+            margin-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-green);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-icon:hover {
+            background: rgba(74, 222, 128, 0.2);
+            border-color: var(--accent-green);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .footer-bottom p {
+            margin: 0.5rem 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .nav-menu {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .hero {
+                flex-direction: column;
+                padding: 2rem 1rem;
+                margin-top: 40px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-mockup {
+                margin-top: 2rem;
+                order: -1;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 0;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .nav-menu {
+                gap: 0.75rem;
+                font-size: 0.75rem;
+            }
+
+            .auth-buttons {
+                gap: 0.5rem;
+            }
+
+            .btn-login, .btn-register {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            .hero {
+                margin-top: 50px;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+            }
+
+            .phone-frame {
+                width: 280px;
+                height: 560px;
+                margin: 0 auto;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .features-grid, .stats-grid, .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .map-container {
+                height: 300px;
+            }
+
+            .process-timeline {
+                gap: 1rem;
+            }
+
+            .process-step {
+                padding: 1.5rem 1rem;
+            }
+
+            .process-arrow {
+                display: none !important;
+            }
+
+            footer {
+                padding: 2rem 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* Scroll animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Particles -->
+    <div class="background-particles" id="particlesContainer"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">🌍</span>
+                <span>ECOALERT VES</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#funciones">Funciones</a></li>
+                <li><a href="#mapa">Mapa</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button class="btn-login">Iniciar sesión</button>
+                <button class="btn-register">Registrarse</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span>🚀</span>
+                <span>Tecnología + Comunidad + Planeta</span>
+            </div>
+            <h1 class="hero-title">
+                ECOALERT <span class="green">VES</span>
+            </h1>
+            <p class="hero-subtitle">
+                "Despierta el planeta que vive en ti"
+            </p>
+            <p class="hero-description">
+                Reporta contaminación, protege tu comunidad y ayuda a construir un Villa El Salvador más limpio mediante inteligencia artificial y participación ciudadana.
+            </p>
+            <div class="hero-buttons">
+                <button class="btn-primary">🎥 Reportar contaminación</button>
+                <button class="btn-secondary">🗺️ Ver mapa en vivo</button>
+            </div>
+            <div class="hero-info">
+                <div class="info-item">
+                    <span class="info-label">Reportes realizados</span>
+                    <span class="info-value counter" data-target="1248">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Ciudadanos activos</span>
+                    <span class="info-value counter" data-target="980">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Árboles plantados</span>
+                    <span class="info-value counter" data-target="3200">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-mockup">
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <div class="screen-header">
+                        <span style="font-weight: 600;">9:41</span>
+                        <span style="display: flex; gap: 4px; font-size: 0.6rem;">📶 🔋</span>
+                    </div>
+                    <div style="color: var(--accent-green); font-weight: 600; margin-bottom: 0.5rem;">EcoAlert VES</div>
+                    <div style="color: var(--text-secondary); font-size: 0.65rem; margin-bottom: 0.75rem;">¿Qué deseas reportar?</div>
+                    <div class="screen-category">
+                        <div class="category-icon">🗑️</div>
+                        <div class="category-icon">🔥</div>
+                        <div class="category-icon">💧</div>
+                        <div class="category-icon">🏗️</div>
+                    </div>
+                    <div class="screen-map">
+                        <div style="position: absolute; top: 20%; left: 25%; width: 8px; height: 8px; background: #EF4444; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                        <div style="position: absolute; top: 40%; left: 60%; width: 8px; height: 8px; background: #FBBF24; border-radius: 50%; animation: pulse 2s infinite 0.5s;"></div>
+                        <div style="position: absolute; top: 60%; left: 40%; width: 8px; height: 8px; background: var(--accent-green); border-radius: 50%; animation: pulse 2s infinite 1s;"></div>
+                    </div>
+                    <button class="screen-button">📤 Enviar reporte</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="sobre">
+        <h2 class="section-title">Sobre EcoAlert VES</h2>
+        <p class="section-subtitle">Una plataforma inteligente para Villa El Salvador</p>
+
+        <div class="about-content">
+            <div>
+                <h3>¿Qué es EcoAlert VES?</h3>
+                <p>
+                    EcoAlert VES es una plataforma inteligente que utiliza inteligencia artificial y la colaboración ciudadana para detectar, registrar y visualizar problemas ambientales en Villa El Salvador.
+                </p>
+                <p>
+                    Su objetivo es facilitar que cualquier ciudadano pueda reportar focos de contaminación y contribuir a un distrito más limpio, sostenible y conectado.
+                </p>
+
+                <div class="about-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">🎯</span>
+                        <div class="feature-text">
+                            <h4>Objetivo claro</h4>
+                            <p>Transformar Villa El Salvador mediante tecnología y participación</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">🤝</span>
+                        <div class="feature-text">
+                            <h4>Comunidad conectada</h4>
+                            <p>Empodera a los ciudadanos a hacer la diferencia</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">🌱</span>
+                        <div class="feature-text">
+                            <h4>Sostenibilidad</h4>
+                            <p>Soluciones ecológicas a largo plazo para nuestra comunidad</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-image">
+                🌍
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="funciones">
+        <h2 class="section-title">¿Qué puedes hacer en EcoAlert VES?</h2>
+        <p class="section-subtitle">Funciones principales de la plataforma</p>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-card-icon">📸</div>
+                <h3>Reportar contaminación</h3>
+                <p>
+                    Permite subir fotografías y reportar basura acumulada, quema de residuos, escombros, aguas contaminadas y más.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card-icon">🧠</div>
+                <h3>Inteligencia Artificial</h3>
+                <p>
+                    La IA analiza automáticamente las fotografías enviadas para detectar tipo de contaminación, gravedad, prioridad y soluciones.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card-icon">🗺️</div>
+                <h3>Mapa inteligente</h3>
+                <p>
+                    Visualiza en tiempo real los focos de contaminación en Villa El Salvador con marcadores luminosos por nivel de gravedad.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card-icon">🔔</div>
+                <h3>Alertas en tiempo real</h3>
+                <p>
+                    Recibe notificaciones sobre campañas de limpieza, reciclaje, actividades ambientales y reportes cercanos a ti.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card-icon">🏆</div>
+                <h3>Ranking ecológico</h3>
+                <p>
+                    Sistema de puntos e insignias. Usuarios destacados, barrios más limpios y heroes ecológicos de la comunidad.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card-icon">📚</div>
+                <h3>Educación ambiental</h3>
+                <p>
+                    Accede a consejos interactivos sobre reciclaje, ahorro de agua, separación de residuos y cambio climático.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="statistics">
+        <h2 class="section-title">Impacto en la comunidad</h2>
+        <p class="section-subtitle">Datos que demuestran nuestro compromiso (Datos demostrativos)</p>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number counter" data-target="1248">0</div>
+                <div class="stat-label">Reportes realizados</div>
+                <div class="stat-change">+12% este mes</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-number counter" data-target="980">0</div>
+                <div class="stat-label">Ciudadanos activos</div>
+                <div class="stat-change">+8% este mes</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-number counter" data-target="125">0</div>
+                <div class="stat-label">Campañas realizadas</div>
+                <div class="stat-change">+15% este mes</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-number counter" data-target="3200">0</div>
+                <div class="stat-label">Árboles plantados</div>
+                <div class="stat-change">+20% este mes</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-number">425<span style="font-size: 1rem;">T</span></div>
+                <div class="stat-label">Residuos recolectados</div>
+                <div class="stat-change">+18% este mes</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Satisfacción ciudadana</div>
+                <div class="stat-change">Excelente calificación</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IA Process Section -->
+    <section class="ia-process">
+        <h2 class="section-title">IA en acción</h2>
+        <p class="section-subtitle">Así funciona nuestro proceso de análisis inteligente</p>
+
+        <div class="process-timeline">
+            <div class="process-step">
+                <div class="process-number">1</div>
+                <h3>Usuario reporta</h3>
+                <p>Toma una foto y describe el problema</p>
+                <div class="process-arrow">→</div>
+            </div>
+
+            <div class="process-step">
+                <div class="process-number">2</div>
+                <h3>IA analiza</h3>
+                <p>Procesa la imagen automáticamente</p>
+                <div class="process-arrow">→</div>
+            </div>
+
+            <div class="process-step">
+                <div class="process-number">3</div>
+                <h3>Detecta problema</h3>
+                <p>Identifica tipo y gravedad</p>
+                <div class="process-arrow">→</div>
+            </div>
+
+            <div class="process-step">
+                <div class="process-number">4</div>
+                <h3>Ubica en mapa</h3>
+                <p>Marca en tiempo real</p>
+                <div class="process-arrow">→</div>
+            </div>
+
+            <div class="process-step">
+                <div class="process-number">5</div>
+                <h3>Genera alerta</h3>
+                <p>Notifica a ciudadanos</p>
+                <div class="process-arrow">→</div>
+            </div>
+
+            <div class="process-step">
+                <div class="process-number">6</div>
+                <h3>Comunidad actúa</h3>
+                <p>Todos participan en soluciones</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section" id="mapa">
+        <h2 class="section-title">Mapa inteligente de Villa El Salvador</h2>
+        <p class="section-subtitle">Visualiza los focos de contaminación en tiempo real</p>
+
+        <div class="map-container">
+            <div class="map-background">🗺️</div>
+            <div class="map-overlay"></div>
+
+            <div class="map-legend">
+                <div class="legend-item">
+                    <div class="legend-color color-red"></div>
+                    <span>ALTO (Urgente)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color color-orange"></div>
+                    <span>MEDIO (Atención)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color color-yellow"></div>
+                    <span>BAJO (Leve)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color color-green"></div>
+                    <span>RESUELTO (Atendido)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery">
+        <h2 class="section-title">Galería de Villa El Salvador</h2>
+        <p class="section-subtitle">Los espacios emblemáticos de nuestro distrito</p>
+
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <div class="gallery-image">⛪</div>
+                <div class="gallery-overlay">
+                    <span class="gallery-title">Cristo del Pacífico</span>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="gallery-image">🎨</div>
+                <div class="gallery-overlay">
+                    <span class="gallery-title">Murales artísticos</span>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="gallery-image">🌳</div>
+                <div class="gallery-overlay">
+                    <span class="gallery-title">Parques y espacios verdes</span>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="gallery-image">🌊</div>
+                <div class="gallery-overlay">
+                    <span class="gallery-title">Playas de la Costa Verde</span>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="gallery-image">🏛️</div>
+                <div class="gallery-overlay">
+                    <span class="gallery-title">Centro cívico</span>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="gallery-image">🛣️</div>
+                <div class="gallery-overlay">
+                    <span class="gallery-title">Avenidas principales</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission">
+        <div class="mission-content">
+            <div class="mission-icon">🌱</div>
+            <h2 class="section-title">Nuestra Misión</h2>
+            <p class="mission-text">
+                Queremos transformar Villa El Salvador en un distrito donde <span class="mission-highlight">la tecnología, la inteligencia artificial y la participación ciudadana</span> trabajen juntas para cuidar el medio ambiente y mejorar la calidad de vida de todos.
+            </p>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section class="support">
+        <h2 class="section-title">¿Necesitas ayuda?</h2>
+        <p class="section-subtitle">Estamos aquí para apoyarte en tu experiencia</p>
+
+        <div class="support-grid">
+            <div class="support-card">
+                <div class="support-icon">❓</div>
+                <h3>Centro de ayuda</h3>
+                <p>
+                    Encuentra respuestas a preguntas frecuentes y guías detalladas sobre cómo usar EcoAlert VES.
+                </p>
+                <a href="#" class="support-link">Explorar centro de ayuda →</a>
+            </div>
+
+            <div class="support-card">
+                <div class="support-icon">💬</div>
+                <h3>Chat de soporte</h3>
+                <p>
+                    Contacta directamente con nuestro equipo de soporte disponible en horarios de atención.
+                </p>
+                <a href="#" class="support-link">Iniciar chat →</a>
+            </div>
+
+            <div class="support-card">
+                <div class="support-icon">📋</div>
+                <h3>Formulario de contacto</h3>
+                <p>
+                    Envía tus dudas, sugerencias o reportes a través de nuestro formulario seguro.
+                </p>
+                <a href="#" class="support-link">Enviar mensaje →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contacto">
+        <h2 class="section-title">Contáctanos</h2>
+        <p class="section-subtitle">Ponte en contacto con nosotros de la forma que prefieras</p>
+
+        <div class="contact-content">
+            <div class="contact-item">
+                <div class="contact-icon">📱</div>
+                <div class="contact-info">
+                    <h4>WhatsApp</h4>
+                    <p>+51 946 196 534</p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon">📧</div>
+                <div class="contact-info">
+                    <h4>Correo electrónico</h4>
+                    <p>contacto@ecoalertves.pe</p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon">📍</div>
+                <div class="contact-info">
+                    <h4>Ubicación</h4>
+                    <p>Villa El Salvador, Lima - Perú</p>
+                </div>
+            </div>
+
+            <div class="hours">
+                <h4>Horario de atención</h4>
+                <div class="hours-list">
+                    <div class="hours-item">
+                        <span>Lunes a Viernes:</span>
+                        <span>8:00 a.m. - 6:00 p.m.</span>
+                    </div>
+                    <div class="hours-item">
+                        <span>Sábados:</span>
+                        <span>9:00 a.m. - 1:00 p.m.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>EcoAlert VES</h3>
+                    <p>Despierta el planeta que vive en ti.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" title="Facebook">f</a>
+                        <a href="#" class="social-icon" title="Instagram">📷</a>
+                        <a href="#" class="social-icon" title="TikTok">♪</a>
+                        <a href="#" class="social-icon" title="YouTube">▶</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Plataforma</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Reportar</a></li>
+                        <li><a href="#">Mapa</a></li>
+                        <li><a href="#">Ranking</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Información</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Sobre nosotros</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">Términos y condiciones</a></li>
+                        <li><a href="#">Descargar app</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Comunidad</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Eventos</a></li>
+                        <li><a href="#">Voluntarios</a></li>
+                        <li><a href="#">Asociados</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 EcoAlert VES. Todos los derechos reservados.</p>
+                <p>Villa El Salvador, un distrito que se transforma con acción y conciencia. 🌱</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Generar partículas de fondo
+        function createParticles() {
+            const container = document.getElementById('particlesContainer');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animation = `float ${3 + Math.random() * 2}s ease-in-out infinite`;
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Animar contadores
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                let current = 0;
+                const increment = target / 50;
+
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        counter.textContent = Math.floor(current).toLocaleString('es-PE');
+                        setTimeout(updateCounter, 30);
+                    } else {
+                        counter.textContent = target.toLocaleString('es-PE');
+                    }
+                };
+
+                updateCounter();
+            });
+        }
+
+        // Scroll reveal animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .stat-card, .process-step, .support-card, .gallery-item').forEach(el => {
+            el.classList.add('scroll-reveal');
+            observer.observe(el);
+        });
+
+        // Smooth scroll para links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const element = document.querySelector(href);
+                    if (element) {
+                        element.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Inicializar
+        window.addEventListener('load', () => {
+            createParticles();
+            animateCounters();
+        });
+
+        // Efecto hover en botones
+        const buttons = document.querySelectorAll('.btn-primary, .btn-secondary');
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    button.style.transform = '';
+                }, 200);
+            });
+        });
+
+        // Parallax effect en hero
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.hero');
+            const scrolled = window.pageYOffset;
+            
+            if (scrolled < window.innerHeight) {
+                hero.style.backgroundPosition = `0 ${scrolled * 0.5}px`;
+            }
+        });
+    </script>
+</body>
+</html>
