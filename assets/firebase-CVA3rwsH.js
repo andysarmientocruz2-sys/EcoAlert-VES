@@ -1,0 +1,1 @@
+function s(){const o=function(){return s()};return new Proxy(o,{get:(a,n)=>n===Symbol.toPrimitive?()=>0:n===Symbol.toStringTag?"FirebaseStub":s(),apply:()=>s(),construct:()=>s()})}const t=s(),e=t,c=t,i=t,r=t,u=t,g=t,d=t,l=t,m=t,h=t,b=t,p=t,P=t,f=t,A=t,S=t;export{b as G,S as T,i as a,r as b,P as c,p as d,u as e,g as f,c as g,d as h,e as i,l as j,m as k,h as o,f as s,A as u};

@@ -1,1 +1,0 @@
-import{j as a}from"./framer-Cp_haBT0.js";import{s}from"./index-Bj9P-NXZ.js";function c({className:r,...o}){return a.jsx("div",{"data-loc":"client\\src\\components\\ui\\card.tsx:7","data-slot":"card",className:s("bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",r),...o})}export{c as C};
